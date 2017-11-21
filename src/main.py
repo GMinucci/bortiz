@@ -30,19 +30,17 @@ def get_answer():
 
 
 def mentioned_me(msgs):
-    mentions = list(filter(
-                    lambda x: any(w in x['message']['text'] for w in KEYWORDS
-                                  if 'text' in x['message']), msgs))
-
-    print(mentions)
-
     which_are_channels = []
+
+    mentions = list(filter(
+                    lambda x: any(
+                        w in x.get('message').get('text') for w in KEYWORDS
+                        if 'message' in x
+                        and 'text' in x.get('message')), msgs))
 
     for c in mentions:
         if not c['message']['chat']['id'] in which_are_channels:
             which_are_channels.append(c['message']['chat']['id'])
-
-    print(which_are_channels)
 
     if len(mentions) > 0:
         return which_are_channels
@@ -96,7 +94,7 @@ def start_bot():
         answer_to = is_funny(result)
 
         if len(result) > 0 and answer_to:
-            time.sleep(10)
+            time.sleep(5)
             answser(result=result, channels=answer_to)
 
 
