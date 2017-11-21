@@ -20,5 +20,9 @@ requests = "==2.18.4"
 Werkzeug = "==0.12.2"
 
 
-[dev-packages]
+[requires]
 
+python_version = "3.6"
+
+
+[dev-packages]

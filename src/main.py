@@ -8,8 +8,6 @@ app = Flask(__name__)
 
 next_offset = None
 
-CHAT_ID = -180596549
-
 KEYWORDS = [
     '@ortiz_bot',
     '@dnlortz'
@@ -20,10 +18,12 @@ def get_answer():
     answers = [
         'hahahaha',
         'hahahahah',
+        'aahahahaha',
         'hahahahahahah',
         'hahahahhahahah',
         'hahahahahahahahahaha',
         'hahahahahahhahahahaha',
+        'ahahahahahahhahahahaha',
     ]
 
     return random.choice(answers)
@@ -31,32 +31,45 @@ def get_answer():
 
 def mentioned_me(msgs):
     mentions = list(filter(
-                    lambda x: any(w in x['message']['text'] for w in KEYWORDS),
-                    msgs))
+                    lambda x: any(w in x['message']['text'] for w in KEYWORDS
+                                  if 'text' in x['message']), msgs))
+
+    print(mentions)
+
+    which_are_channels = []
+
+    for c in mentions:
+        if not c['message']['chat']['id'] in which_are_channels:
+            which_are_channels.append(c['message']['chat']['id'])
+
+    print(which_are_channels)
 
     if len(mentions) > 0:
-        return True
+        return which_are_channels
     else:
         return False
 
 
 def is_funny(msgs):
-    if mentioned_me(msgs):
-        return True
+    to_answer_channels = mentioned_me(msgs)
+
+    if to_answer_channels:
+        return to_answer_channels
     else:
         return False
 
 
-def answser(result=[]):
+def answser(channels, result=[]):
     if len(result) > 0 or len(result.result) > 0:
-        payload = {
-            'chat_id': CHAT_ID,
-            'text': get_answer()
-        }
+        for c_id in channels:
+            payload = {
+                'chat_id': c_id,
+                'text': get_answer()
+            }
 
-        requests.post('https://api.telegram.org/bot473779410:AAGLR'
-                      'yTBCBj5fkrW1sYe_IF3mXcWVz1Rn3A/sendMessage',
-                      data=payload)
+            requests.post('https://api.telegram.org/bot473779410:AAGLR'
+                          'yTBCBj5fkrW1sYe_IF3mXcWVz1Rn3A/sendMessage',
+                          data=payload)
 
 
 def get_updates():
@@ -76,15 +89,15 @@ def get_updates():
     return json_response
 
 
-# @app.route('/')
 def start_bot():
 
     while True:
         result = get_updates()
+        answer_to = is_funny(result)
 
-        if len(result) > 0 and is_funny(result):
+        if len(result) > 0 and answer_to:
             time.sleep(10)
-            answser(result)
+            answser(result=result, channels=answer_to)
 
 
 start_bot()
