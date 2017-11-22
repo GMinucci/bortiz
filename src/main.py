@@ -81,7 +81,7 @@ def get_updates():
 
     json_response = r.get('result', None)
 
-    if json_response and len(json_response) > 0:
+    if json_response is not None and len(json_response) > 0:
         next_offset = json_response[-1]['update_id'] + 1
 
     return json_response
