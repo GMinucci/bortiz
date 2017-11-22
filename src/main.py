@@ -91,9 +91,9 @@ def start_bot():
 
     while True:
         result = get_updates()
-        answer_to = is_funny(result)
 
-        if len(result) > 0 and answer_to:
+        if result is not None and len(result) > 0:
+            answer_to = is_funny(result)
             time.sleep(5)
             answser(result=result, channels=answer_to)
 

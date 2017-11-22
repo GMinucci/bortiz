@@ -3,5 +3,4 @@ from src.main import app as application
 
 if __name__ == "__main__":
     port = os.environ.get('PORT', 5000)
-    print(port)
     application.run(port=port, processes=2)
