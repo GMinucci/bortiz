@@ -95,7 +95,8 @@ def start_bot():
         if result is not None and len(result) > 0:
             answer_to = is_funny(result)
             time.sleep(5)
-            answser(result=result, channels=answer_to)
+            if answer_to:
+                answser(result=result, channels=answer_to)
 
 
 start_bot()
