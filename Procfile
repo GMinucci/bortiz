@@ -1,1 +1,1 @@
-web: gunicorn wsgi
+web: python src/bortiz.py
