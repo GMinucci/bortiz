@@ -10,14 +10,15 @@ name = "pypi"
 certifi = "==2017.11.5"
 chardet = "==3.0.4"
 click = "==6.7"
-Flask = "==0.12.2"
+flask = "==0.12.2"
 idna = "==2.6"
 itsdangerous = "==0.24"
-"Jinja2" = "==2.10"
-MarkupSafe = "==1.0"
+"jinja2" = "==2.10"
+markupsafe = "==1.0"
 requests = "==2.18.4"
 "urllib3" = "==1.22"
-Werkzeug = "==0.12.2"
+werkzeug = "==0.12.2"
+gunicorn = "*"
 
 
 [requires]
@@ -26,3 +27,4 @@ python_version = "3.6"
 
 
 [dev-packages]
+
