@@ -1,1 +1,1 @@
-FLASK_APP=wsgi.py flask run -p ${PALSQ}
+FLASK_APP=wsgi.py flask run
