@@ -79,7 +79,7 @@ def get_updates():
                       'yTBCBj5fkrW1sYe_IF3mXcWVz1Rn3A/getUpdates',
                       data={'offset': offset, 'timeout': 30}).json()
 
-    json_response = r['result']
+    json_response = r.get('result')
 
     if len(json_response) > 0:
         next_offset = json_response[-1]['update_id'] + 1
