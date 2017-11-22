@@ -1,1 +1,1 @@
-web: python src/bortiz.py
+worker: python src/bortiz.py
