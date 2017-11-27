@@ -16,6 +16,10 @@ markupsafe = "==1.0"
 "urllib3" = "==1.22"
 werkzeug = "==0.12.2"
 python-telegram-bot = "*"
+sqlalchemy = "*"
+sqlalchemy-searchable = "*"
+sqlalchemy-utils = "*"
+"psycopg2" = "*"
 
 
 [requires]
