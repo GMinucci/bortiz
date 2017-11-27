@@ -13,18 +13,13 @@ dispatcher = updater.dispatcher
 
 
 def get_answer():
-    answers = [
-        'hahahaha',
-        'hahahahah',
-        'aahahahaha',
-        'hahahahahahah',
-        'hahahahhahahah',
-        'hahahahahahahahahaha',
-        'hahahahahahhahahahaha',
-        'ahahahahahahhahahahaha',
-    ]
-
-    return random.choice(answers)
+    initial = "ha" * (2 * random.randrange(2, 6))
+    initial = list(initial)
+    for i in range(0, 10):
+        if bool(random.getrandbits(1)):
+            initial[random.randrange(0, len(initial) - 1)] = \
+                random.choice(["a", "h", "A", "H"])
+    return "".join(initial)
 
 
 def store_message(bot, update):
