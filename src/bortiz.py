@@ -7,7 +7,6 @@ import db as db
 from telegram.ext import Updater, MessageHandler, Filters
 from ortiz_mention_filter import ortiz_mention
 from models.update import Update
-from models.message import Message
 
 updater = Updater(os.environ.get('TOKEN'))
 dispatcher = updater.dispatcher
@@ -25,9 +24,11 @@ def get_answer():
 
 def store_update(bot, update):
     session = db.Session()
-    update = Update(update)
+    data = Update(
+        document=update.to_json()
+    )
 
-    session.add(update)
+    session.add(data)
     session.commit()
 
 

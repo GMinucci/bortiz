@@ -1,16 +1,11 @@
 import db as db
 import sqlalchemy as sa
-from sqlalchemy_searchable import make_searchable
-from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy import Column, BigInteger, Text, DateTime
 from sqlalchemy_utils.types import TSVectorType
 
-make_searchable()
-Base = declarative_base()
 
-
-class Message(Base):
+class Message(db.Base):
     __tablename__ = 'messages'
 
     id = Column(BigInteger, primary_key=True)
@@ -21,4 +16,4 @@ class Message(Base):
 
 
 sa.orm.configure_mappers()
-Base.metadata.create_all(db.instance)
+db.Base.metadata.create_all(db.instance)
