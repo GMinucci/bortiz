@@ -1,5 +1,11 @@
 # BORTIZ
 
-`pipenv install`
+```
+pipenv install
 
-`python src/bortiz.py`
+export TOKEN=<token>
+export DATABASE_URL=<database_url>
+
+python src/bortiz.py
+
+```
