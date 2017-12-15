@@ -13,7 +13,7 @@ Base = declarative_base()
 class Message(Base):
     __tablename__ = 'messages'
 
-    id = Column(BigInteger)
+    id = Column(BigInteger, primary_key=True)
     user_id = Column(BigInteger)
     message_date = Column(DateTime)
     message = Column(Text)
