@@ -13,7 +13,7 @@ Base = declarative_base()
 class Update(Base):
     __tablename__ = 'updates'
 
-    id = Column(BigInteger)
+    id = Column(BigInteger, primary_key=True)
     update = Column(JSONB)
 
 
