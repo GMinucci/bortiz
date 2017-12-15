@@ -2,11 +2,12 @@ import logging
 import random
 import time
 import os
+import db as db
 
-from telegram import MessageEntity
 from telegram.ext import Updater, MessageHandler, Filters
 from ortiz_mention_filter import ortiz_mention
-from db import Message
+from models.update import Update
+from models.message import Message
 
 updater = Updater(os.environ.get('TOKEN'))
 dispatcher = updater.dispatcher
@@ -22,8 +23,12 @@ def get_answer():
     return "".join(initial)
 
 
-def store_message(bot, update):
+def store_update(bot, update):
+    session = db.Session()
+    update = Update(update)
 
+    session.add(update)
+    session.commit()
 
 
 def echo(bot, update):
@@ -38,7 +43,7 @@ logging.basicConfig(
 echo_handler = MessageHandler(Filters.text & ortiz_mention, echo)
 dispatcher.add_handler(echo_handler)
 
-storemessage_handler = MessageHandler(Filters.all, store_message)
+storemessage_handler = MessageHandler(Filters.all, store_update)
 dispatcher.add_handler(storemessage_handler)
 
 updater.start_polling()
