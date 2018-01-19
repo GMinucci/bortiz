@@ -1,0 +1,22 @@
+version: '2'
+services:
+  db:
+    restart: always
+    image: postgres:latest
+    container_name: bortiz_db
+    environment:
+      - POSTGRES_USER=bortiz
+      - POSTGRES_PASSWORD=eJf7Cws4m5vW4k04xb0
+      - POSTGRES_DB=bortiz_db
+      - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@localhost:5432/$POSTGRES_DB
+    env_file:
+    - .env
+  web:
+    image: bortiz01
+    restart: always
+    build: .
+    container_name: bortiz_web
+    depends_on:
+      - db
+    expose:
+      - "80"
