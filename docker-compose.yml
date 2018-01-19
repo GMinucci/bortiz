@@ -8,7 +8,6 @@ services:
       - POSTGRES_USER=bortiz
       - POSTGRES_PASSWORD=eJf7Cws4m5vW4k04xb0
       - POSTGRES_DB=bortiz_db
-      - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@localhost:5432/$POSTGRES_DB
     env_file:
     - .env
   web:
