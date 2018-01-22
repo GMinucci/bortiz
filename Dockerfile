@@ -1,25 +1,19 @@
-FROM python:3.6
+FROM kennethreitz/pipenv
 ENV PYTHONUNBUFFERED 1
 MAINTAINER Rodrigo Teobaldo rgomes090@gmail.com
 
-# Create config folder on /
-# RUN mkdir /config
-
-# Copy pip requirements file to the container
-# ADD /Pipfile /
-
-# Copy the start_command.sh file to the container
-# ADD /config/start_command.sh /config/
-
-# Give run permissions to the start_command file
-# RUN chmod 755 /config/start_command.sh
-
 # Install pip requirements
-RUN pip install pipenv
-RUN pipenv install --system
+# RUN set -ex && pip install pipenv --upgrade
+RUN set -ex && pip install gunicorn
 
-# Create web-media folder to handle static files
-# RUN mkdir /web-media
+# Create config folder on /app
+# RUN set -ex && mkdir /app
 
 # Set the work directory to all commands after here
-# WORKDIR /src
+WORKDIR /app
+
+# Copy pip requirements file to the container
+ONBUILD COPY Pipfile Pipfile
+ONBUILD COPY Pipfile.lock Pipfile.lock
+
+ONBUILD RUN set -ex && pipenv install --deploy --system

@@ -20,6 +20,9 @@ sqlalchemy = "*"
 sqlalchemy-searchable = "*"
 sqlalchemy-utils = "*"
 "psycopg2" = "*"
+flask = "*"
+flask-sqlalchemy = "*"
+gunicorn = "*"
 
 
 [requires]

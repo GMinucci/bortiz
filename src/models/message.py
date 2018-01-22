@@ -1,19 +1,22 @@
-import db as db
-import sqlalchemy as sa
-
-from sqlalchemy import Column, BigInteger, Text, DateTime
+from bortiz import db
+from flask_sqlalchemy import BaseQuery
 from sqlalchemy_utils.types import TSVectorType
+from sqlalchemy_searchable import SearchQueryMixin
 
+class MessageQuery(BaseQuery, SearchQueryMixin):
+    pass
 
-class Message(db.Base):
+class Message(db.Model):
+    query_class = MessageQuery
     __tablename__ = 'messages'
 
-    id = Column(BigInteger, primary_key=True)
-    user_id = Column(BigInteger)
-    message_date = Column(DateTime)
-    message = Column(Text)
-    search_vector = Column(TSVectorType('message'))
+    id = db.Column(db.BigInteger, primary_key=True)
+    user_id = db.Column(db.BigInteger)
+    message_date = db.Column(db.DateTime)
+    message = db.Column(db.Text)
+    search_vector = db.Column(TSVectorType('message'))
 
 
-sa.orm.configure_mappers()
-db.Base.metadata.create_all(db.instance)
+db.configure_mappers()
+db.create_all()
+db.commit()

@@ -2,11 +2,31 @@ import logging
 import random
 import time
 import os
-import db as db
 
 from telegram.ext import Updater, MessageHandler, Filters
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_searchable import make_searchable
 from ortiz_mention_filter import ortiz_mention
 from models.update import Update
+
+app = Flask(__name__)
+
+POSTGRES_USER = os.environ.get('POSTGRES_USER')
+POSTGRES_DB = os.environ.get('POSTGRES_DB')
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if os.environ.get('ENV') == 'production':
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+else:
+    DATABASE_URL = f'postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@localhost:5432/{POSTGRES_DB}'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+
+db = SQLAlchemy(app)
+
+make_searchable()
 
 updater = Updater(os.environ.get('TOKEN'))
 dispatcher = updater.dispatcher
@@ -23,13 +43,12 @@ def get_answer():
 
 
 def store_update(bot, update):
-    session = db.Session()
     data = Update(
         document=update.to_json()
     )
 
-    session.add(data)
-    session.commit()
+    db.session.add(data)
+    db.session.commit()
 
 
 def echo(bot, update):

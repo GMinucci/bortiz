@@ -15,7 +15,10 @@ services:
     restart: always
     build: .
     container_name: bortiz_web
+    command: bash -c "gunicorn wsgi:application"
     depends_on:
       - db
+    volumes:
+      - .:/app
     expose:
       - "80"
