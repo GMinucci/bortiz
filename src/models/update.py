@@ -1,10 +1,11 @@
-from bortiz import db
+from src.bortiz import db
+from sqlalchemy.dialects.postgresql.json import JSONB
 
 class Update(db.Model):
     __tablename__ = 'updates'
 
     id = db.Column(db.BigInteger, primary_key=True)
-    document = db.Column(db.JSONB)
+    document = db.Column(JSONB)
 
 db.configure_mappers()
 db.create_all()

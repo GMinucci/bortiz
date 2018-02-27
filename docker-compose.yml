@@ -12,7 +12,7 @@ services:
     - .env
   web:
     image: bortiz01
-    restart: always
+    # restart: always
     build: .
     container_name: bortiz_web
     command: bash -c "gunicorn wsgi:application"

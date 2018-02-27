@@ -1,4 +1,4 @@
-from bortiz import db
+from src.bortiz import db
 from flask_sqlalchemy import BaseQuery
 from sqlalchemy_utils.types import TSVectorType
 from sqlalchemy_searchable import SearchQueryMixin

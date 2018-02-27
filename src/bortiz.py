@@ -7,28 +7,22 @@ from telegram.ext import Updater, MessageHandler, Filters
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_searchable import make_searchable
-from ortiz_mention_filter import ortiz_mention
-from models.update import Update
+from src.ortiz_mention_filter import ortiz_mention
 
 app = Flask(__name__)
 
-POSTGRES_USER = os.environ.get('POSTGRES_USER')
-POSTGRES_DB = os.environ.get('POSTGRES_DB')
-POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
-DATABASE_URL = os.environ.get('DATABASE_URL')
-
 if os.environ.get('ENV') == 'production':
-    DATABASE_URL = os.environ.get('DATABASE_URL')
+    app.config.from_object('src.config.ProductionConfig')
 else:
-    DATABASE_URL = f'postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@localhost:5432/{POSTGRES_DB}'
-
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    app.config.from_object('src.config.DevelopmentConfig')
 
 db = SQLAlchemy(app)
 
+from src.models.update import Update
+
 make_searchable()
 
-updater = Updater(os.environ.get('TOKEN'))
+updater = Updater(app.config['TOKEN'])
 dispatcher = updater.dispatcher
 
 
