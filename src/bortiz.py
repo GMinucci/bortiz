@@ -10,11 +10,7 @@ from sqlalchemy_searchable import make_searchable
 from src.ortiz_mention_filter import ortiz_mention
 
 app = Flask(__name__)
-
-if os.environ.get('ENV') == 'production':
-    app.config.from_object('src.config.ProductionConfig')
-else:
-    app.config.from_object('src.config.DevelopmentConfig')
+app.config.from_object('src.config.Config')
 
 db = SQLAlchemy(app)
 
