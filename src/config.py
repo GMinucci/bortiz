@@ -1,8 +1,9 @@
 import os
 
-POSTGRES_USER = os.environ.get('POSTGRES_USER')
-POSTGRES_DB = os.environ.get('POSTGRES_DB')
-POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+DATABASE_URL = os.environ.get('DATABASE_URL')
+# POSTGRES_USER = os.environ.get('POSTGRES_USER')
+# POSTGRES_DB = os.environ.get('POSTGRES_DB')
+# POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
 
 class Config(object):
     DEBUG = False
@@ -14,4 +15,4 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = f'postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@localhost:5432/{POSTGRES_DB}'
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL
