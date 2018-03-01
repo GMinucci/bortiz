@@ -1,23 +1,30 @@
-version: '2'
+version: '3.3'
+
+volumes:
+  postgres_data: {}
+
+networks:
+  postgres_net: {}
+
 services:
-  db:
-    restart: always
+  postgres:
     image: postgres:latest
-    container_name: bortiz_db
-    environment:
-      - POSTGRES_USER=bortiz
-      - POSTGRES_PASSWORD=eJf7Cws4m5vW4k04xb0
-      - POSTGRES_DB=bortiz_db
-    env_file:
-    - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file: .env
+    networks:
+      - postgres_net
+
   web:
     build:
       context: ./
       dockerfile: ./dockerfiles/web/Dockerfile
     command: ['gunicorn', '-c', 'dockerfiles/web/gunicorn.py', 'wsgi:application']
     depends_on:
-      - db
+      - postgres
     volumes:
       - .:/app
+    networks:
+      - postgres_net
     expose:
       - "80"
