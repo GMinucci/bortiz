@@ -9,7 +9,7 @@ class Update(db.Model):
 
 db.configure_mappers()
 db.create_all()
-db.commit()
+db.session.commit()
 
 # sa.event.listen(Update.__tablename__, 'after_insert',
 #                 DDL("""

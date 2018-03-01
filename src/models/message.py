@@ -19,4 +19,4 @@ class Message(db.Model):
 
 db.configure_mappers()
 db.create_all()
-db.commit()
+db.session.commit()
