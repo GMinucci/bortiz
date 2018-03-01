@@ -2,15 +2,17 @@ version: '3.3'
 
 volumes:
   postgres_data: {}
+  postgres_backup: {}
 
 networks:
   postgres_net: {}
 
 services:
   postgres:
-    image: postgres:latest
+    build: dockerfiles/postgres/
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - postgres_backup:/backups
     env_file: .env
     networks:
       - postgres_net
