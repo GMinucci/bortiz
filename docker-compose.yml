@@ -21,7 +21,7 @@ services:
       dockerfile: ./dockerfiles/web/Dockerfile
     env_file: .env
     entrypoint: ["/entrypoint.sh"]
-    command: ['gunicorn', '-c', 'dockerfiles/web/gunicorn.py', 'wsgi:application']
+    command: ['gunicorn', '-c', 'gunicorn.py', 'wsgi:application']
     depends_on:
       - postgres
     volumes:
