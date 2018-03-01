@@ -13,7 +13,7 @@ RUN set -ex && pip install gunicorn
 WORKDIR /app
 
 # Copy pip requirements file to the container
-ONBUILD COPY Pipfile Pipfile
-ONBUILD COPY Pipfile.lock Pipfile.lock
+ONBUILD COPY Pipfile .
+ONBUILD COPY Pipfile.lock .
 
 ONBUILD RUN set -ex && pipenv install --deploy --system
