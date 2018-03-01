@@ -11,11 +11,10 @@ services:
     env_file:
     - .env
   web:
-    image: bortiz01
-    # restart: always
-    build: .
-    container_name: bortiz_web
-    command: bash -c "gunicorn wsgi:application"
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/web/Dockerfile
+    command: ['gunicorn', '-c', 'dockerfiles/web/gunicorn.py', 'wsgi:application']
     depends_on:
       - db
     volumes:
