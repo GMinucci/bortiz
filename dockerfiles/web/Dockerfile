@@ -9,11 +9,17 @@ RUN set -ex && pip install gunicorn
 # Create config folder on /app
 # RUN set -ex && mkdir /app
 
+# Copy entrypoint script
+COPY dockerfiles/web/entrypoint.sh /entrypoint.sh
+
+# Give scripts run permission
+RUN chmod +x /entrypoint.sh
+
 # Set the work directory to all commands after here
 WORKDIR /app
 
 # Copy pip requirements file to the container
-ONBUILD COPY Pipfile .
-ONBUILD COPY Pipfile.lock .
+ONBUILD COPY Pipfile Pipfile
+ONBUILD COPY Pipfile.lock Pipfile.lock
 
 ONBUILD RUN set -ex && pipenv install --deploy --system
